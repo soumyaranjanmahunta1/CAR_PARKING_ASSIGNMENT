@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { Dialog, Box, TextField, Typography, Button } from "@mui/material";
+import {
+  Dialog,
+  Box,
+  TextField,
+  Typography,
+  Button,
+  Select,
+  MenuItem,
+} from "@mui/material";
 import { authenticateSignup, authenticateLogin } from "../../../Server/api";
 import { useContext } from "react";
 import { DataContext } from "../../../Context/DataProvider";
@@ -22,6 +30,7 @@ const signupinitialval = {
   email: "",
   password: "",
   phone: "",
+  role: "",
 };
 const initialloginData = {
   username: "",
@@ -50,9 +59,11 @@ export default function LoginDialog({ open, setOpen }) {
   const onInputChange = (e) => {
     setSignup({ ...signup, [e.target.name]: e.target.value });
   };
+  const onSelectChange = (e) => {
+    setSignup({ ...signup, role: e.target.value });
+  };
   const signUpUser = async () => {
-    
-    let response = await authenticateSignup(signup, {setsignerror});
+    let response = await authenticateSignup(signup, { setsignerror });
     if (!response) {
       return;
     }
@@ -201,8 +212,22 @@ export default function LoginDialog({ open, setOpen }) {
                 name="phone"
                 label="Enter Phone"
               />
+              <Select
+                onChange={(e) => onSelectChange(e)}
+                sx={{ height: "50px", marginTop: "6px" }}
+              >
+                <MenuItem value={"User"}>User</MenuItem>
+                <MenuItem value={"Admin"}>Admin</MenuItem>
+              </Select>
               {signerror ? (
-                <Typography sx={{ fontSize: "12px", color: "red",marginTop:"8px",marginBottom:"-13px" }}>
+                <Typography
+                  sx={{
+                    fontSize: "12px",
+                    color: "red",
+                    marginTop: "8px",
+                    marginBottom: "-13px",
+                  }}
+                >
                   Please Enter valid Details with unique Email and UserName
                 </Typography>
               ) : (
