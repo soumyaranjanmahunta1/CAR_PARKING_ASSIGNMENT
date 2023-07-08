@@ -1,17 +1,11 @@
 import mongoose from "mongoose";
 
 const ParkingAvailabilitySchema = new mongoose.Schema({
-  place: String,
-  slots: {
-    type: Number,
-    required: true,
-    trim: true,
-    unique: true,
-    lowercase: true,
-  },
+  parkingPlace: String,
+  slots: Number,
   vehicleType: String,
   price: Number,
-  duration: String,
+  duration: Number,
 });
 
 const ParkingModel = mongoose.model(
