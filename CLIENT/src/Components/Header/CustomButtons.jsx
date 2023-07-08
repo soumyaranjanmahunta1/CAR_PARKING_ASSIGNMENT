@@ -35,7 +35,7 @@ export default function CustomButtons() {
         </Button>
       )}
 
-      <Link to="/bookslot">
+      <Link to="/request">
         <Button
           sx={{
             color: "#2874F0",
@@ -47,6 +47,7 @@ export default function CustomButtons() {
             height: "30px",
             boxShadow: "none",
           }}
+          variant="contained"
         >
           BookSlot
         </Button>

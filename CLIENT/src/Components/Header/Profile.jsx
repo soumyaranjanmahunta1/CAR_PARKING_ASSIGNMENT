@@ -4,7 +4,10 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { useContext } from "react";
+import { DataContext } from "../../Context/DataProvider";
 export default function Profile({ account, setAccount }) {
+  const { setpanelist } = useContext(DataContext);
   const [open, setopen] = useState(false);
   const handelClick = (event) => {
     setopen(event.currentTarget);
@@ -14,6 +17,7 @@ export default function Profile({ account, setAccount }) {
   };
   const Logoutuser = () => {
     setAccount("");
+    setpanelist("");
   };
   return (
     <>

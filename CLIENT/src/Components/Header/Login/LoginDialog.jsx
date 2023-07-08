@@ -7,6 +7,8 @@ import {
   Button,
   Select,
   MenuItem,
+  InputLabel,
+  FormControl,
 } from "@mui/material";
 import { authenticateSignup, authenticateLogin } from "../../../Server/api";
 import { useContext } from "react";
@@ -38,6 +40,7 @@ const initialloginData = {
 };
 export default function LoginDialog({ open, setOpen }) {
   const { setAccount } = useContext(DataContext);
+  const { panelist,setpanelist } = useContext(DataContext);
   const [error, showError] = useState(false);
   const [signerror, setsignerror] = useState(false);
   const [signup, setSignup] = useState(signupinitialval);
@@ -45,8 +48,9 @@ export default function LoginDialog({ open, setOpen }) {
   const [login, setLogin] = useState(initialloginData);
   const onValueChange = (e) => {
     setLogin({ ...login, [e.target.name]: e.target.value });
-    console.log(login);
+    
   };
+  console.log(panelist);
   const loginuser = async () => {
     let response = await authenticateLogin(login);
     if (!response) showError(true);
@@ -54,6 +58,7 @@ export default function LoginDialog({ open, setOpen }) {
       showError(false);
       Handellclose();
       setAccount(response.data.data.firstname);
+      setpanelist(response.data.data.role);
     }
   };
   const onInputChange = (e) => {
@@ -212,13 +217,21 @@ export default function LoginDialog({ open, setOpen }) {
                 name="phone"
                 label="Enter Phone"
               />
-              <Select
-                onChange={(e) => onSelectChange(e)}
-                sx={{ height: "50px", marginTop: "6px" }}
-              >
-                <MenuItem value={"User"}>User</MenuItem>
-                <MenuItem value={"Admin"}>Admin</MenuItem>
-              </Select>
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">
+                  Select Role
+                  </InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  onChange={(e) => onSelectChange(e)}
+                    label="Select Role"
+                    variant="standard"
+                  sx={{ height: "50px", marginTop: "6px" }}
+                >
+                  <MenuItem value={"User"}>User</MenuItem>
+                  <MenuItem value={"Admin"}>Admin</MenuItem>
+                </Select>
+              </FormControl>
               {signerror ? (
                 <Typography
                   sx={{

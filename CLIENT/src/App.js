@@ -2,16 +2,24 @@
 import './App.css';
 import Header from './Components/Header/Header';
 import DataProvider from './Context/DataProvider';
-import Home from './Components/Home/Home';
 import { Route, Routes } from 'react-router-dom';
-import BookSlot from './Components/Home/BookSlot';
+import HomePage from './Components/HomePage';
+import ContactDetails from './Components/ContactDetails';
+import RequestService from './Components/RequestService';
+import ServiceStatus from './Components/ServiceStatus';
+import AdminPanel from './Components/AdminPanel';
+import Navbar from './Components/Navbar';
 function App() {
   return (
     <DataProvider>
       <Header />
+      <Navbar/>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/bookslot" element={<BookSlot />} />
+        <Route path="/" element={<HomePage/>} />
+        <Route path="/contact" element={<ContactDetails/>} />
+        <Route path="/request" element={<RequestService/>} />
+        <Route path="/status/:requestId" element={<ServiceStatus/>} />
+        <Route path="/admin" element={<AdminPanel/>} />
       </Routes>
     </DataProvider>
   );

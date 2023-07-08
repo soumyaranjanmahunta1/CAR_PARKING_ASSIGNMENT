@@ -8,13 +8,13 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import DeleteIcon from "@mui/icons-material/Delete";
-export default function Home() {
+
+export default function HomePage() {
   const [availability, setAvailability] = useState([]);
   const URL = "http://localhost:8000";
   useEffect(() => {
     axios
-      .get(`${URL}/bookslot`)
+      .get(`${URL}/parkingPlace`)
       .then((response) => {
         setAvailability(response.data);
       })
@@ -22,21 +22,16 @@ export default function Home() {
         console.error(error);
       });
   }, [availability]);
-
-  const deleteData = async(id) => {
-   await axios
-      .delete(`${URL}/delete/${id}`)
-      .then((response) => {
-      
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }
   return (
-    <Box sx={{ marginTop: "60px", padding: "25px" }}>
+    <Box sx={{ marginTop: "10px", padding: "25px", backgroundImage: "" }}>
+      
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <Table
+          sx={{
+            minWidth: 650,
+          }}
+          aria-label="simple table"
+        >
           <TableHead sx={{ backgroundColor: "#2874F0" }}>
             <TableRow>
               <TableCell sx={{ color: "white", fontWeight: "700" }}>
@@ -64,17 +59,11 @@ export default function Home() {
                 sx={{ color: "white", fontWeight: "700" }}
                 align="right"
               >
-                Duration
-              </TableCell>
-              <TableCell
-                sx={{ color: "white", fontWeight: "700" }}
-                align="right"
-              >
-                Delete
+                Duration(HR)
               </TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
+          <TableBody style={{ background: `url()` }}>
             {availability.map((el) => {
               return (
                 <TableRow
@@ -86,23 +75,25 @@ export default function Home() {
                   }}
                 >
                   <TableCell component="th" scope="row">
-                    {el.place}
+                    {el.parkingPlace}
                   </TableCell>
                   <TableCell align="right">{el.slots}</TableCell>
                   <TableCell align="right">{el.vehicleType}</TableCell>
                   <TableCell align="right">{el.price}</TableCell>
                   <TableCell align="right">{el.duration}</TableCell>
-                  <TableCell align="right">
-                    <DeleteIcon
-                      onClick={() => deleteData(el._id)}
-                    />
-                  </TableCell>
                 </TableRow>
               );
             })}
           </TableBody>
         </Table>
       </TableContainer>
+      <Box sx={{textAlign:"center",marginTop:"-10px"}}>
+        <img
+          src="https://parkit.se/wp-content/uploads/park-it-paid-parking.gif"
+          alt=""
+          style={{width:"50%"}}
+        />
+      </Box>
     </Box>
   );
 }
