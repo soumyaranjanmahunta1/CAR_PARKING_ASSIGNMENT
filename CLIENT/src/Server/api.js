@@ -1,8 +1,8 @@
 import axios from "axios";
-const URL = "http://localhost:8000";
-export const authenticateSignup = async (data,{setsignerror}) => {
+const URL = "https://parkingwebsite.onrender.com";
+export const authenticateSignup = async (data, { setsignerror }) => {
   try {
-    console.log(data)
+    console.log(data);
     const response = await axios.post(`${URL}/signup`, data);
     setsignerror(false);
     return response;

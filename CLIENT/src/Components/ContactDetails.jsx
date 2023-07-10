@@ -15,7 +15,7 @@ export default function ContactDetails() {
   const onInputChange = (e) => {
     setdetailData({ ...detailData, [e.target.name]: e.target.value });
   }
-const URL = "http://localhost:8000";
+const URL = "https://parkingwebsite.onrender.com";
   const SubmitmyQuery = async() => {
      try {
       const response = await axios.post(`${URL}/contactDetails`, detailData);

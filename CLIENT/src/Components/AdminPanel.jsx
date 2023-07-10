@@ -27,7 +27,7 @@ export default function AdminPanel() {
 
   const parkingPlaceData = async () => {
     console.log(serviceData);
-    const URL = "http://localhost:8000";
+    const URL = "https://parkingwebsite.onrender.com";
     try {
       const response = await axios.post(`${URL}/parkingPlaces`, serviceData);
       if (response) {

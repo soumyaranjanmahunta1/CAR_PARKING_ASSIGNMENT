@@ -11,7 +11,7 @@ import Paper from "@mui/material/Paper";
 
 export default function HomePage() {
   const [availability, setAvailability] = useState([]);
-  const URL = "http://localhost:8000";
+  const URL = "https://parkingwebsite.onrender.com";
   useEffect(() => {
     axios
       .get(`${URL}/parkingPlace`)

@@ -39,7 +39,7 @@ export default function RequestService() {
   };
 
   const parkingPlaceData = async () => {
-    const URL = "http://localhost:8000";
+    const URL = "https://parkingwebsite.onrender.com";
     try {
       const response = await axios.get(
         `${URL}/requestService?parkingPlace=${requestData.parkingPlace}&vehicleType=${requestData.vehicleType}&slots=${requestData.slots}`
@@ -75,7 +75,7 @@ export default function RequestService() {
   
   const otpsubmit = async() => {
     if (otpinp == "96257") {
-      const URL = "http://localhost:8000";
+      const URL = "https://parkingwebsite.onrender.com";
       try {
       console.log(payment)
       const response = await axios.post(`${URL}/payment`, payment);
