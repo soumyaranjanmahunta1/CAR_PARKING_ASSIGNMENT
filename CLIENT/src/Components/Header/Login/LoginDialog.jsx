@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import {
   Dialog,
   Box,
@@ -26,8 +28,7 @@ const initialValue = {
   },
 };
 const signupinitialval = {
-  firstname: "",
-  lastname: "",
+  fullname: "",
   username: "",
   email: "",
   password: "",
@@ -40,24 +41,24 @@ const initialloginData = {
 };
 export default function LoginDialog({ open, setOpen }) {
   const { setAccount } = useContext(DataContext);
-  const { panelist,setpanelist } = useContext(DataContext);
+  const { panelist, setpanelist } = useContext(DataContext);
   const [error, showError] = useState(false);
   const [signerror, setsignerror] = useState(false);
   const [signup, setSignup] = useState(signupinitialval);
   const [account, toggleAcount] = useState(initialValue.login);
   const [login, setLogin] = useState(initialloginData);
+  const [type, settype] = useState("password");
+  const [valid, setvalid] = useState("");
   const onValueChange = (e) => {
     setLogin({ ...login, [e.target.name]: e.target.value });
-    
   };
-  console.log(panelist);
   const loginuser = async () => {
     let response = await authenticateLogin(login);
     if (!response) showError(true);
     else {
       showError(false);
       Handellclose();
-      setAccount(response.data.data.firstname);
+      setAccount(response.data.data.username);
       setpanelist(response.data.data.role);
     }
   };
@@ -68,12 +69,39 @@ export default function LoginDialog({ open, setOpen }) {
     setSignup({ ...signup, role: e.target.value });
   };
   const signUpUser = async () => {
+    if (!signup.fullname) {
+      setvalid("Fullname is required");
+    } else if (!/^(?:[A-Z][a-z]*\s+)+[A-Z][a-z]*$/.test(signup.fullname)) {
+      setvalid(
+        "Please enter a valid full name with the first letter of each word capitalized"
+      );
+    } else if (!signup.username) {
+      setvalid("Username is required");
+    } else if (!signup.email) {
+      setvalid("Email is required");
+    } else if (!/\S+@\S+\.\S+/.test(signup.email)) {
+      setvalid("Invalid email format");
+    } else if (!signup.password) {
+      setvalid("Password is required");
+    } else if (!signup.phone) {
+      setvalid("Phone is required");
+    } else if (signup.phone.length !== 10) {
+      setvalid("Phone number must be 10 digits long");
+    } else if (!signup.role) {
+      setvalid("Role is required");
+    } else {
+      setvalid("");
+    }
+    console.log("x");
     let response = await authenticateSignup(signup, { setsignerror });
+    console.log(response);
     if (!response) {
       return;
     }
     Handellclose();
-    setAccount(signup.firstname);
+    console.log(response);
+    setAccount(signup.username);
+    setpanelist(signup.role);
   };
   const handelExistAcc = () => {
     toggleAcount(initialValue.login);
@@ -84,6 +112,14 @@ export default function LoginDialog({ open, setOpen }) {
   };
   const switchtoSignup = () => {
     toggleAcount(initialValue.signup);
+  };
+
+  const changeType = () => {
+    if (type == "password") {
+      settype("text");
+    } else {
+      settype("password");
+    }
   };
   return (
     <Dialog
@@ -123,6 +159,7 @@ export default function LoginDialog({ open, setOpen }) {
               <TextField
                 variant="standard"
                 label="Enter username"
+                type="text"
                 onChange={(e) => onValueChange(e)}
                 name="username"
               />
@@ -133,12 +170,28 @@ export default function LoginDialog({ open, setOpen }) {
               ) : (
                 ""
               )}
-              <TextField
-                variant="standard"
-                label="Enter Password"
-                onChange={(e) => onValueChange(e)}
-                name="password"
-              />
+
+              <Box sx={{ display: "flex" }}>
+                <TextField
+                  variant="standard"
+                  onChange={(e) => onValueChange(e)}
+                  name="password"
+                  type={type}
+                  label="Enter Password"
+                  sx={{ width: "100%" }}
+                />
+                {type == "password" ? (
+                  <VisibilityOffIcon
+                    onClick={changeType}
+                    sx={{ marginTop: "10px" }}
+                  />
+                ) : (
+                  <VisibilityIcon
+                    onClick={changeType}
+                    sx={{ marginTop: "10px" }}
+                  />
+                )}
+              </Box>
               <Typography
                 sx={{ marginTop: "20px", fontSize: "12px", color: "#878787" }}
               >
@@ -184,14 +237,8 @@ export default function LoginDialog({ open, setOpen }) {
               <TextField
                 variant="standard"
                 onChange={(e) => onInputChange(e)}
-                name="firstname"
-                label="Enter Firstname"
-              />
-              <TextField
-                variant="standard"
-                onChange={(e) => onInputChange(e)}
-                name="lastname"
-                label="Enter Lastname"
+                name="fullname"
+                label="Enter Your Fullname"
               />
               <TextField
                 variant="standard"
@@ -202,37 +249,55 @@ export default function LoginDialog({ open, setOpen }) {
               <TextField
                 variant="standard"
                 onChange={(e) => onInputChange(e)}
+                type="email"
                 name="email"
                 label="Enter Email"
               />
-              <TextField
-                variant="standard"
-                onChange={(e) => onInputChange(e)}
-                name="password"
-                label="Enter Password"
-              />
+              <Box sx={{ display: "flex" }}>
+                <TextField
+                  variant="standard"
+                  onChange={(e) => onInputChange(e)}
+                  name="password"
+                  type={type}
+                  label="Enter Password"
+                  sx={{ width: "100%" }}
+                />
+                {type == "password" ? (
+                  <VisibilityOffIcon
+                    onClick={changeType}
+                    sx={{ marginTop: "10px" }}
+                  />
+                ) : (
+                  <VisibilityIcon
+                    onClick={changeType}
+                    sx={{ marginTop: "10px" }}
+                  />
+                )}
+              </Box>
+
               <TextField
                 variant="standard"
                 onChange={(e) => onInputChange(e)}
                 name="phone"
+                type="number"
                 label="Enter Phone"
               />
-              <FormControl fullWidth>
+              <FormControl fullWidth sx={{ marginTop: "7px" }}>
                 <InputLabel id="demo-simple-select-label">
                   Select Role
-                  </InputLabel>
+                </InputLabel>
                 <Select
                   labelId="demo-simple-select-label"
                   onChange={(e) => onSelectChange(e)}
-                    label="Select Role"
-                    variant="standard"
+                  label="Select Role"
+                  variant="standard"
                   sx={{ height: "50px", marginTop: "6px" }}
                 >
                   <MenuItem value={"User"}>User</MenuItem>
                   <MenuItem value={"Admin"}>Admin</MenuItem>
                 </Select>
               </FormControl>
-              {signerror ? (
+              {valid ? (
                 <Typography
                   sx={{
                     fontSize: "12px",
@@ -241,7 +306,21 @@ export default function LoginDialog({ open, setOpen }) {
                     marginBottom: "-13px",
                   }}
                 >
-                  Please Enter valid Details with unique Email and UserName
+                  {valid}
+                </Typography>
+              ) : (
+                ""
+              )}
+              {valid == "" && signerror ? (
+                <Typography
+                  sx={{
+                    fontSize: "12px",
+                    color: "red",
+                    marginTop: "8px",
+                    marginBottom: "-13px",
+                  }}
+                >
+                  Please Enter unique Email and UserName
                 </Typography>
               ) : (
                 ""

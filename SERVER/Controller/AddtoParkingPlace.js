@@ -1,4 +1,3 @@
-
 import ParkingModel from "../Model/parkingAvailabilitySchema.js";
 export const AddtoParkingPlace = async (req, res) => {
   const { parkingPlace, slots, vehicleType, price, duration } = req.body;
@@ -11,7 +10,7 @@ export const AddtoParkingPlace = async (req, res) => {
     duration,
   });
 
-  newAvailability
+  await newAvailability
     .save()
     .then((savedAvailability) => {
       res.status(201).json(savedAvailability);
@@ -21,4 +20,3 @@ export const AddtoParkingPlace = async (req, res) => {
       res.status(500).json({ error: err.message });
     });
 };
-

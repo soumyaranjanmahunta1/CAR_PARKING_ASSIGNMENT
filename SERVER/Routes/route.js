@@ -6,7 +6,7 @@ import { getParkingPlaceData } from "../Controller/getparkingPlaceData.js";
 import requestService from "../Controller/requestService.js";
 import contactDetailsController from "../Controller/contactDetailController.js";
 import paymentController, { paymentgetController } from "../Controller/paymentController.js";
-
+import updateParkingSlots from "../Controller/updateParkingSlots.js";
 router.post("/signup", usersignUp);
 router.post("/login", userLogin);
 router.get("/parkingPlace",getParkingPlaceData);
@@ -15,9 +15,7 @@ router.get("/requestService", requestService);
 router.post("/contactDetails", contactDetailsController);
 router.post("/payment", paymentController);
 router.get("/getpayment", paymentgetController);
-
-
-
+router.put("/updateParkingSlots", updateParkingSlots);
 export default router;
 
 

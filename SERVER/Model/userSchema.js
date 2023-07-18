@@ -1,14 +1,7 @@
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
-  firstname: {
-    type: String,
-    required: true,
-    trim: true,
-    min: 1,
-    max: 20,
-  },
-  lastname: {
+  fullname: {
     type: String,
     required: true,
     trim: true,
@@ -36,6 +29,7 @@ const userSchema = new mongoose.Schema({
   },
   phone: {
     type: String,
+    min: 10,
     required: true,
   },
   role: {

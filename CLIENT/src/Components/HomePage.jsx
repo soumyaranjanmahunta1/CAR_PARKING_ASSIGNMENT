@@ -11,7 +11,7 @@ import Paper from "@mui/material/Paper";
 
 export default function HomePage() {
   const [availability, setAvailability] = useState([]);
-  const URL = "https://parkingwebsite.onrender.com";
+  const URL = "http://localhost:8000";
   useEffect(() => {
     axios
       .get(`${URL}/parkingPlace`)
@@ -21,10 +21,9 @@ export default function HomePage() {
       .catch((error) => {
         console.error(error);
       });
-  }, [availability]);
+  }, []);
   return (
     <Box sx={{ marginTop: "10px", padding: "25px", backgroundImage: "" }}>
-      
       <TableContainer component={Paper}>
         <Table
           sx={{
@@ -87,11 +86,11 @@ export default function HomePage() {
           </TableBody>
         </Table>
       </TableContainer>
-      <Box sx={{textAlign:"center",marginTop:"-10px"}}>
+      <Box sx={{ textAlign: "center", marginTop: "-10px" }}>
         <img
           src="https://parkit.se/wp-content/uploads/park-it-paid-parking.gif"
           alt=""
-          style={{width:"50%"}}
+          style={{ width: "50%" }}
         />
       </Box>
     </Box>

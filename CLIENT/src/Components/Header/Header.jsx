@@ -1,5 +1,5 @@
 import { useState } from "react";
-import {Button} from "@mui/material";
+import { Button } from "@mui/material";
 import {
   AppBar,
   Toolbar,
@@ -8,8 +8,8 @@ import {
   IconButton,
   Drawer,
   List,
-    styled,
-  ListItem
+  styled,
+  ListItem,
 } from "@mui/material";
 
 import { Menu } from "@mui/icons-material";
@@ -51,13 +51,9 @@ const MenuButton = styled(IconButton)(({ theme }) => ({
 
 const CustomButtonWrapper = styled("span")(({ theme }) => ({
   margin: "0 5% 0 auto",
- 
 }));
 
 const Header = () => {
-
-
-
   const [open, setOpen] = useState(false);
 
   const handleClose = () => {
@@ -71,15 +67,24 @@ const Header = () => {
   return (
     <StyledHeader position="fixed">
       <Toolbar style={{ minHeight: 55 }}>
-       
-
         <Component to="/">
-       
-          <Box component="span" style={{ display: "flex" }}>
-            <Typography variant="h5">Parking</Typography>
+          <Box
+            component="span"
+            style={{
+              display: "flex",
+            }}
+          >
+            <Typography variant="h5" sx={{ fontFamily: "serif" }}>
+              Parking
+            </Typography>
+            <img
+              src="https://www.pngkit.com/png/full/14-146161_white-location-icon-png-location-logo-png-white.png"
+              alt=""
+              style={{ width: "30px", height: "35px" }}
+            />
           </Box>
         </Component>
-       
+
         <CustomButtonWrapper>
           <CustomButtons />
         </CustomButtonWrapper>

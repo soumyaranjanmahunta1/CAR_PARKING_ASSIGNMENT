@@ -1,11 +1,32 @@
 .App {
   text-align: center;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+*{
+  font-family: "serif";
 }
+
+    .pushable {
+      background: rgb(135, 62, 0);
+      border-radius: 12px;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      outline-offset: 4px;
+    }
+  
+    .front {
+      display: block;
+      padding: 12px 42px;
+      border-radius: 12px;
+      font-size: 1.25rem;
+      background: #FB641B;
+      color: white;
+      transform: translateY(-6px);
+    }
+  
+    .pushable:active .front {
+      transform: translateY(-2px);
+    }
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
